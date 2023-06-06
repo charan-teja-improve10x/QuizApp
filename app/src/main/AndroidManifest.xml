@@ -13,6 +13,9 @@
         android:theme="@style/Theme.QuizApp"
         tools:targetApi="31">
         <activity
+            android:name=".question.QuestionsActivity"
+            android:exported="false" />
+        <activity
             android:name=".home.HomeActivity"
             android:exported="true">
             <intent-filter>
