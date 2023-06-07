@@ -1,5 +1,6 @@
 package com.example.quizapp.network;
 
+import com.example.quizapp.model.Question;
 import com.example.quizapp.model.Quiz;
 
 import java.util.List;

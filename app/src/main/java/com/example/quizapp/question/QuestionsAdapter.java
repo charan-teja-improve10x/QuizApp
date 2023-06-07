@@ -7,15 +7,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizapp.databinding.QuestionNumberItemBinding;
-import com.example.quizapp.model.Quiz;
+import com.example.quizapp.model.Question;
 
 import java.util.List;
 
 public class QuestionsAdapter extends RecyclerView.Adapter<QuestionNumberViewHolder> {
 
-    List<Quiz> quizzes;
-    public QuestionsAdapter( List<Quiz> quizzes) {
-        this.quizzes = quizzes;
+    private List<Question> questions;
+    public QuestionsAdapter( List<Question> questions) {
+        this.questions = questions;
+    }
+
+    void setQuestions(List<Question> questions){
+        this.questions = questions;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -29,12 +34,12 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionNumberViewHol
 
     @Override
     public void onBindViewHolder(@NonNull QuestionNumberViewHolder holder, int position) {
-        Quiz quiz = quizzes.get(position);
-        holder.binding.questionNumberTxt.setText(quiz.getQuestions().get(position).getNumber());
+        Question question = questions.get(position);
+        holder.binding.questionNumberTxt.setText(String.valueOf(question.getNumber()));
     }
 
     @Override
     public int getItemCount() {
-        return quizzes.size();
+        return questions.size();
     }
 }

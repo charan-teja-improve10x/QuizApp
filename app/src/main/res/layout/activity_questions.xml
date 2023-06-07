@@ -11,6 +11,7 @@
         android:id="@+id/question_number_rv"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -35,25 +36,25 @@
         app:layout_constraintTop_toBottomOf="@+id/question_txt">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/option_one_rb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="RadioButton" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/option_two_rb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="RadioButton" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/option_three_rb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="RadioButton" />
 
         <RadioButton
-            android:id="@+id/radioButton4"
+            android:id="@+id/option_four_rb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="RadioButton" />
