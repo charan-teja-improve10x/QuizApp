@@ -17,7 +17,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionNumberViewHol
 
     private List<Question> questions;
     private OnQuestionClicked onQuestionClicked;
-    private int selectedQuestion = 0;
+    int selectedQuestion = 1;
     public QuestionsAdapter( List<Question> questions) {
         this.questions = questions;
     }
@@ -45,15 +45,13 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionNumberViewHol
     public void onBindViewHolder(@NonNull QuestionNumberViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Question question = questions.get(position);
         holder.binding.questionNumberTxt.setText(String.valueOf(question.getNumber()));
-        if (selectedQuestion == position){
+        if (selectedQuestion == position +1){
             holder.binding.questionNumberTxt.setBackgroundColor(Color.parseColor("#FFFF5722"));
         }else {
             holder.binding.questionNumberTxt.setBackgroundColor(Color.parseColor("#FFFFFF"));
         }
         holder.binding.getRoot().setOnClickListener(v -> {
             onQuestionClicked.onClicked(question.getNumber());
-            selectedQuestion = position;
-            notifyDataSetChanged();
         });
     }
 
