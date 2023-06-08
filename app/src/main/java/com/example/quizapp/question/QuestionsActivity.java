@@ -1,13 +1,11 @@
 package com.example.quizapp.question;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.quizapp.BaseActivity;
-import com.example.quizapp.R;
 import com.example.quizapp.databinding.ActivityQuestionsBinding;
 import com.example.quizapp.model.Question;
 import com.example.quizapp.model.Quiz;
@@ -19,11 +17,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class QuestionsActivity extends BaseActivity {
+public class QuestionsActivity extends BaseActivity implements OnQuestionClicked{
 
     private ActivityQuestionsBinding binding;
     private QuestionsAdapter questionsAdapter;
     private List<Quiz> quizzes = new ArrayList<>();
+    private int currentQuestionNumber = 1;
 
 
     @Override
@@ -34,11 +33,33 @@ public class QuestionsActivity extends BaseActivity {
         fetchQuestionsData();
         setupAdapter();
         connectAdapter();
+        handlePreviousBtn();
+        handleNextBtn();
+    }
 
+    private void handleNextBtn() {
+        binding.nextBtn.setOnClickListener(v -> {
+            currentQuestionNumber ++;
+            loadQuestionDetails(currentQuestionNumber);
+            if (currentQuestionNumber == quizzes.get(0).getQuestions().size()){
+                binding.nextBtn.setEnabled(false);
+            }
+        });
+    }
+
+    private void handlePreviousBtn() {
+        binding.previousBtn.setOnClickListener(v -> {
+            currentQuestionNumber --;
+            loadQuestionDetails(currentQuestionNumber);
+            if (currentQuestionNumber == 1) {
+                binding.previousBtn.setEnabled(false);
+            }
+        });
     }
 
     private void setupAdapter() {
         questionsAdapter = new QuestionsAdapter(new ArrayList<>());
+        questionsAdapter.setOnQuestionClicked(this);
     }
 
     private void connectAdapter() {
@@ -59,17 +80,23 @@ public class QuestionsActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<List<Quiz>> call, Throwable t) {
-
+                Toast.makeText(QuestionsActivity.this, "Fetch failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
     private void loadQuestionDetails(int questionNumber) {
-        Question question = quizzes.get(0).getQuestions().get(questionNumber - 1);
+        currentQuestionNumber = questionNumber;
+        Question question = quizzes.get(0).getQuestions().get(questionNumber-1);
         binding.questionTxt.setText(question.getQuestion());
         binding.optionOneRb.setText(question.getAnswers().get(0));
         binding.optionTwoRb.setText(question.getAnswers().get(1));
         binding.optionThreeRb.setText(question.getAnswers().get(2));
         binding.optionFourRb.setText(question.getAnswers().get(3));
 
+    }
+
+    @Override
+    public void onClicked(int questionNumber) {
+        loadQuestionDetails(questionNumber);
     }
 }
