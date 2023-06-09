@@ -47,8 +47,10 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionNumberViewHol
         holder.binding.questionNumberTxt.setText(String.valueOf(question.getNumber()));
         if (selectedQuestion == position +1){
             holder.binding.questionNumberTxt.setBackgroundColor(Color.parseColor("#FFFF5722"));
+            holder.binding.questionNumberTxt.setTextColor(Color.parseColor("#FFFFFF"));
         }else {
-            holder.binding.questionNumberTxt.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            holder.binding.questionNumberTxt.setBackgroundColor(Color.parseColor("#FF00BCD4"));
+            holder.binding.questionNumberTxt.setTextColor(Color.parseColor("#FF0B0B0B"));
         }
         holder.binding.getRoot().setOnClickListener(v -> {
             onQuestionClicked.onClicked(question.getNumber());
