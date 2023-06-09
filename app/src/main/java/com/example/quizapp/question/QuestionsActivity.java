@@ -2,6 +2,7 @@ package com.example.quizapp.question;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -10,6 +11,7 @@ import com.example.quizapp.BaseActivity;
 import com.example.quizapp.databinding.ActivityQuestionsBinding;
 import com.example.quizapp.model.Question;
 import com.example.quizapp.model.Quiz;
+import com.example.quizapp.score.ScoreActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ public class QuestionsActivity extends BaseActivity implements OnQuestionClicked
         connectAdapter();
         handlePreviousBtn();
         handleNextBtn();
+        handelSubmitBtn();
     }
 
     private void handleNextBtn() {
@@ -84,6 +87,7 @@ public class QuestionsActivity extends BaseActivity implements OnQuestionClicked
         updateData(questionNumber);
         setPreviousBtnStyling();
         setNextBtnStyling();
+        setSubmitBtnStyling();
     }
 
     private void updateData(int questionNumber) {
@@ -117,8 +121,26 @@ public class QuestionsActivity extends BaseActivity implements OnQuestionClicked
         binding.optionFourRb.setText(question.getAnswers().get(3));
     }
 
+    private void setSubmitBtnStyling() {
+        if (currentQuestionNumber == quizzes.get(0).getQuestions().size()) {
+            binding.submitBtn.setVisibility(View.VISIBLE);
+            binding.nextBtn.setVisibility(View.GONE);
+        } else {
+            binding.nextBtn.setVisibility(View.VISIBLE);
+            binding.submitBtn.setVisibility(View.GONE);
+        }
+    }
+
+    private void handelSubmitBtn() {
+        binding.submitBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ScoreActivity.class);
+            startActivity(intent);
+        });
+    }
+
     @Override
     public void onClicked(int questionNumber) {
         updateQuestionDetails(questionNumber);
     }
+
 }
