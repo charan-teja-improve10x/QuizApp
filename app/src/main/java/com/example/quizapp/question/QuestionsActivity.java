@@ -87,7 +87,7 @@ public class QuestionsActivity extends BaseActivity implements OnQuestionClicked
         setQuestionDetails(questionNumber);
         updateData(questionNumber);
         setPreviousBtnStyling();
-        setNextBtnStyling();
+       // setNextBtnStyling();
         setSubmitBtnStyling();
     }
 
@@ -96,13 +96,13 @@ public class QuestionsActivity extends BaseActivity implements OnQuestionClicked
         questionsAdapter.notifyDataSetChanged();
     }
 
-    private void setNextBtnStyling() {
-        if (currentQuestionNumber == quizzes.get(0).getQuestions().size()) {
-            binding.nextBtn.setEnabled(false);
-        } else {
-            binding.nextBtn.setEnabled(true);
-        }
-    }
+//    private void setNextBtnStyling() {
+//        if (currentQuestionNumber == quizzes.get(0).getQuestions().size()) {
+//            binding.nextBtn.setEnabled(false);
+//        } else {
+//            binding.nextBtn.setEnabled(true);
+//        }
+//    }
 
     private void setPreviousBtnStyling() {
         if (currentQuestionNumber == 1) {
@@ -144,15 +144,4 @@ public class QuestionsActivity extends BaseActivity implements OnQuestionClicked
         updateQuestionDetails(questionNumber);
     }
 
-//    private boolean isCorrect(int questionNUmber) {
-//        int answer = quiz.getQuestions().get(questionNUmber).getCorrectAnswer();
-//        boolean result = false;
-//        if (answer == binding.optionsRg.getCheckedRadioButtonId()){
-//            result = true;
-//            Toast.makeText(this, "Correct Answer", Toast.LENGTH_SHORT).show();
-//        }else {
-//            result = false;
-//        }
-//        return result;
-//    }
 }
