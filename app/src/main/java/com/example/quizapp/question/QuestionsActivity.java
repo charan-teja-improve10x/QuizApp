@@ -26,6 +26,7 @@ public class QuestionsActivity extends BaseActivity implements OnQuestionClicked
     private QuestionsAdapter questionsAdapter;
     private List<Quiz> quizzes = new ArrayList<>();
     private int currentQuestionNumber = 1;
+    private Quiz quiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,4 +144,15 @@ public class QuestionsActivity extends BaseActivity implements OnQuestionClicked
         updateQuestionDetails(questionNumber);
     }
 
+//    private boolean isCorrect(int questionNUmber) {
+//        int answer = quiz.getQuestions().get(questionNUmber).getCorrectAnswer();
+//        boolean result = false;
+//        if (answer == binding.optionsRg.getCheckedRadioButtonId()){
+//            result = true;
+//            Toast.makeText(this, "Correct Answer", Toast.LENGTH_SHORT).show();
+//        }else {
+//            result = false;
+//        }
+//        return result;
+//    }
 }
