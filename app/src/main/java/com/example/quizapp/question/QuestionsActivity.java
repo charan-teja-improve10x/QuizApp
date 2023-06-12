@@ -5,9 +5,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.quizapp.BaseActivity;
+import com.example.quizapp.R;
 import com.example.quizapp.databinding.ActivityQuestionsBinding;
 import com.example.quizapp.model.Question;
 import com.example.quizapp.model.Quiz;
@@ -26,7 +28,7 @@ public class QuestionsActivity extends BaseActivity implements OnQuestionClicked
     private QuestionsAdapter questionsAdapter;
     private List<Quiz> quizzes = new ArrayList<>();
     private int currentQuestionNumber = 1;
-    private Quiz quiz;
+    private Integer[] answerOptionIndexes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class QuestionsActivity extends BaseActivity implements OnQuestionClicked
         handlePreviousBtn();
         handleNextBtn();
         handelSubmitBtn();
+        handleAnswerOptions();
     }
 
     private void handleNextBtn() {
@@ -73,7 +76,9 @@ public class QuestionsActivity extends BaseActivity implements OnQuestionClicked
                 Toast.makeText(QuestionsActivity.this, "Fetch Success", Toast.LENGTH_SHORT).show();
                 quizzes = response.body();
                 questionsAdapter.setQuestions(quizzes.get(0).getQuestions());
+                answerOptionIndexes = new Integer[quizzes.get(0).getQuestions().size()];
                 updateQuestionDetails(1);
+
             }
 
             @Override
@@ -87,7 +92,7 @@ public class QuestionsActivity extends BaseActivity implements OnQuestionClicked
         setQuestionDetails(questionNumber);
         updateData(questionNumber);
         setPreviousBtnStyling();
-       // setNextBtnStyling();
+        // setNextBtnStyling();
         setSubmitBtnStyling();
     }
 
@@ -120,6 +125,17 @@ public class QuestionsActivity extends BaseActivity implements OnQuestionClicked
         binding.optionTwoRb.setText(question.getAnswers().get(1));
         binding.optionThreeRb.setText(question.getAnswers().get(2));
         binding.optionFourRb.setText(question.getAnswers().get(3));
+        if (answerOptionIndexes[currentQuestionNumber - 1] == -1) {
+            binding.optionsRg.clearCheck();
+        } else if (answerOptionIndexes[currentQuestionNumber - 1] == 0) {
+            binding.optionOneRb.setChecked(true);
+        } else if (answerOptionIndexes[currentQuestionNumber - 1] == 1) {
+            binding.optionTwoRb.setChecked(true);
+        } else if (answerOptionIndexes[currentQuestionNumber - 1] == 2) {
+            binding.optionThreeRb.setChecked(true);
+        } else if (answerOptionIndexes[currentQuestionNumber - 1] == 3) {
+            binding.optionFourRb.setChecked(true);
+        }
     }
 
     private void setSubmitBtnStyling() {
@@ -144,4 +160,20 @@ public class QuestionsActivity extends BaseActivity implements OnQuestionClicked
         updateQuestionDetails(questionNumber);
     }
 
+    private void handleAnswerOptions() {
+        binding.optionsRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (binding.optionOneRb.isChecked()){
+                    answerOptionIndexes[currentQuestionNumber] = 0;
+                } else if (binding.optionTwoRb.isChecked()) {
+                    answerOptionIndexes[currentQuestionNumber] = 1;
+                } else if (binding.optionThreeRb.isChecked()) {
+                    answerOptionIndexes[currentQuestionNumber] = 2;
+                }else if (binding.optionFourRb.isChecked()) {
+                    answerOptionIndexes[currentQuestionNumber] = 3;
+                }
+            }
+        });
+    }
 }
